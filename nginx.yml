@@ -1,0 +1,11 @@
+stages:
+- stage: DockerUpload
+  condition: succeeded()
+  jobs:
+  - job: DockerUpload
+    steps:
+    - script: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 633788536644.dkr.ecr.us-east-1.amazonaws.com
+        docker tag ${COMPONENT}:latest 633788536644.dkr.ecr.us-east-1.amazonaws.com/${COMPONENT}:latest
+        docker push 633788536644.dkr.ecr.us-east-1.amazonaws.com/${COMPONENT}:latest
+      displayName: Docker Image Push to ECR
