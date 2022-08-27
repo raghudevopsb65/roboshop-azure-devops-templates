@@ -3,6 +3,8 @@ stages:
   jobs:
   - job: CI
     steps:
+    - script: env
+      displayName: env
     - script: npm install
       displayName: Downlaod NodeJS Dependencies
     - script: docker build -t ${COMPONENT} .
